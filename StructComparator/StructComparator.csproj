@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="MyTreeView.cs" />
+    <Compile Include="NodeTree.cs" />
     <Compile Include="ReferenceObjectViewModel.cs" />
     <Compile Include="TechFileTreeViewItem.cs" />
     <Page Include="MainWindow.xaml">
@@ -112,6 +113,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,14 +22,18 @@ namespace StructComparator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<NodeTree> nodeTrees;
+        private List<NodeTree> nodeTrees1;
         public MainWindow()
         {
             InitializeComponent();
-            Read("C:\\Users\\gadzhiev\\Documents\\out.txt");
-            
+            nodeTrees = new List<NodeTree>();
+            nodeTrees1 = new List<NodeTree>();
+            Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStruct, ref nodeTrees);
+            Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStruct1, ref nodeTrees1);
         }
 
-        public void Read(string path)
+        public void Read(string path, TreeView treeView, ref List<NodeTree> nodeTrees)
         {
             StreamReader stream = null;
             try
@@ -36,28 +41,28 @@ namespace StructComparator
                 stream = new StreamReader(path);
                 while (!stream.EndOfStream)
                 {
-                    var s = stream.ReadLine();
-                    string[] stringArray = s.Split('%');
-                    TechFileTreeViewItem viewItem = new TechFileTreeViewItem()
+                    try
                     {
-                        Header = stringArray.First(),
-                        Name = stringArray.First()
-                    };
-
-                    if (stringArray.Length == 1)
-                    {
-                        this.treeStruct.Items.Add(viewItem);
-                    }
-                    else
-                    {
-                        TechFileTreeViewItem parentItem = null;
-
-                        try
+                        var s = stream.ReadLine();
+                        string[] stringArray = s.Split('%');
+                        if (stringArray.Length > 1)
                         {
-                            parentItem = SearchTreeView(treeStruct, stringArray.Last()) as TechFileTreeViewItem;
-                            parentItem.Items.Add(viewItem);
-                        }catch(Exception ex) { }
-                    }
+                            var parent = FindParent(stringArray[1]);
+                            TechFileTreeViewItem techFile = new TechFileTreeViewItem() { NameText = stringArray[0] };
+                            NodeTree nodeTree = new NodeTree(techFile, parent, stringArray[0]);
+                            parent.Items.Add(techFile);
+                            nodeTrees.Add(nodeTree);
+                        }
+                        else
+                        {
+                            TechFileTreeViewItem techFile = new TechFileTreeViewItem() { NameText = stringArray[0] };
+                            treeView.Items.Add(techFile);
+
+                            NodeTree nodeTree = new NodeTree(techFile, null, stringArray[0]);
+                            nodeTrees.Add(nodeTree);
+                        }
+                    }catch(Exception ex) { }
+                    
                 }
 
             }
@@ -71,15 +76,11 @@ namespace StructComparator
             }
         }
 
-        private TreeViewItem SearchTreeView(ItemsControl item, string header)
+
+        private TechFileTreeViewItem FindParent(string parent)
         {
-            TreeViewItem foundItem = null;
-            foreach (TreeViewItem subItem in item.Items)
-                foundItem = subItem.Header.ToString().Contains(header) ? subItem : SearchTreeView(subItem, header);
-            return foundItem;
+            return this.nodeTrees.Where(n => n.Name == parent).First().TreeViewItem;
         }
-
-
 
     }
 }

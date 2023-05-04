@@ -10,8 +10,34 @@
         
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TreeView Name="treeStruct">
-            
-        </TreeView>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Старая структура" Margin="3"></TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Новая структура" Margin="3"></TextBlock>
+            <TreeView Name="treeStruct" Grid.Column="0" Grid.Row="1">
+
+            </TreeView>
+            <TreeView Name="treeStruct1" Grid.Column="1" Grid.Row="1">
+
+            </TreeView>
+        </Grid>
+
+        <Button Grid.Column="0" Grid.Row="1">Объединить</Button>
     </Grid>
 </Window>
