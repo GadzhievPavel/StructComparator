@@ -30,10 +30,10 @@ namespace StructComparator
             nodeTrees = new List<NodeTree>();
             nodeTrees1 = new List<NodeTree>();
             Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStruct, ref nodeTrees);
-            Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStruct1, ref nodeTrees1);
+            Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStructNew, ref nodeTrees1);
         }
 
-        public void Read(string path, TreeView treeView, ref List<NodeTree> nodeTrees)
+        private void Read(string path, TreeView treeView, ref List<NodeTree> nodeTrees)
         {
             StreamReader stream = null;
             try
@@ -45,17 +45,17 @@ namespace StructComparator
                     {
                         var s = stream.ReadLine();
                         string[] stringArray = s.Split('%');
+                        TechFileTreeViewItem techFile = new TechFileTreeViewItem() { NameText = stringArray[0] };
                         if (stringArray.Length > 1)
                         {
-                            var parent = FindParent(stringArray[1]);
-                            TechFileTreeViewItem techFile = new TechFileTreeViewItem() { NameText = stringArray[0] };
+                            var parent = FindParent(ref nodeTrees, stringArray[1]);
+                            
                             NodeTree nodeTree = new NodeTree(techFile, parent, stringArray[0]);
                             parent.Items.Add(techFile);
                             nodeTrees.Add(nodeTree);
                         }
                         else
                         {
-                            TechFileTreeViewItem techFile = new TechFileTreeViewItem() { NameText = stringArray[0] };
                             treeView.Items.Add(techFile);
 
                             NodeTree nodeTree = new NodeTree(techFile, null, stringArray[0]);
@@ -76,11 +76,9 @@ namespace StructComparator
             }
         }
 
-
-        private TechFileTreeViewItem FindParent(string parent)
+        private TechFileTreeViewItem FindParent(ref List<NodeTree> nodeTrees, string parent)
         {
-            return this.nodeTrees.Where(n => n.Name == parent).First().TreeViewItem;
+            return nodeTrees.Where(n => n.Name == parent).First().TreeViewItem;
         }
-
     }
 }

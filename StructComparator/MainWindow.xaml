@@ -33,7 +33,7 @@
             <TreeView Name="treeStruct" Grid.Column="0" Grid.Row="1">
 
             </TreeView>
-            <TreeView Name="treeStruct1" Grid.Column="1" Grid.Row="1">
+            <TreeView Name="treeStructNew" Grid.Column="1" Grid.Row="1">
 
             </TreeView>
         </Grid>
