@@ -30,7 +30,8 @@ namespace StructComparator
             nodeTrees = new List<NodeTree>();
             nodeTrees1 = new List<NodeTree>();
             Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStruct, ref nodeTrees);
-            Read("C:\\Users\\gadzhiev\\Documents\\out.txt", treeStructNew, ref nodeTrees1);
+            Read("C:\\Users\\gadzhiev\\Documents\\out1.txt", treeStructNew, ref nodeTrees1);
+            analizing(nodeTrees, nodeTrees1);
         }
 
         private void Read(string path, TreeView treeView, ref List<NodeTree> nodeTrees)
@@ -51,7 +52,7 @@ namespace StructComparator
                             var parent = FindParent(ref nodeTrees, stringArray[1]);
                             
                             NodeTree nodeTree = new NodeTree(techFile, parent, stringArray[0]);
-                            parent.Items.Add(techFile);
+                            parent.TreeViewItem.Items.Add(techFile);
                             nodeTrees.Add(nodeTree);
                         }
                         else
@@ -76,9 +77,52 @@ namespace StructComparator
             }
         }
 
-        private TechFileTreeViewItem FindParent(ref List<NodeTree> nodeTrees, string parent)
+        private NodeTree FindParent(ref List<NodeTree> nodeTrees, string parent)
         {
-            return nodeTrees.Where(n => n.Name == parent).First().TreeViewItem;
+            return nodeTrees.Where(n => n.Name == parent).First();
+        }
+
+        private void analizing(List<NodeTree> oneTrees, List<NodeTree> twoTrees)
+        {
+            foreach(NodeTree nodeTree in oneTrees)
+            {
+                var findedNodeInTwo = twoTrees.Where(node => node.Name.Equals(nodeTree.Name)).FirstOrDefault();
+                if(findedNodeInTwo != null)
+                {
+                    if (findedNodeInTwo.Parent != null && nodeTree.Parent != null)
+                    {
+                        if (findedNodeInTwo.Parent.Name.Equals(nodeTree.Parent.Name))
+                        {
+                            findedNodeInTwo.TreeViewItem.setNoAction();
+                            //nodeTree.TreeViewItem.setNoAction();
+                        }
+                    }
+                }
+                else
+                {
+                    nodeTree.TreeViewItem.setDelete();
+                }
+
+                
+            }
+
+            foreach(NodeTree nodeTree in twoTrees)
+            {
+                var findedNodeInOne = oneTrees.Where(node => node.Name.Equals(nodeTree.Name)).FirstOrDefault();
+                if(findedNodeInOne!= null)
+                {
+                    if(findedNodeInOne.Parent != null && nodeTree.Parent != null)
+                    {
+                        if(findedNodeInOne.Parent.Name.Equals(nodeTree.Parent.Name)) {
+                            findedNodeInOne.TreeViewItem.setNoAction();
+                        }
+                    }
+                }
+                else
+                {
+                    nodeTree.TreeViewItem.setAdded();
+                }
+            }
         }
     }
 }

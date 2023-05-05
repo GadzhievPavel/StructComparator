@@ -10,12 +10,12 @@ namespace StructComparator
     {
         private TechFileTreeViewItem treeViewItem;
         private String name;
-        private TechFileTreeViewItem parentTreeViewItem;
+        private NodeTree parentNode;
 
-        public NodeTree(TechFileTreeViewItem treeViewItem, TechFileTreeViewItem parent, String name)
+        public NodeTree(TechFileTreeViewItem treeViewItem, NodeTree parent, String name)
         {
             this.treeViewItem = treeViewItem;
-            this.parentTreeViewItem = parent;
+            this.parentNode = parent;
             this.name = name;
         }
 
@@ -25,10 +25,10 @@ namespace StructComparator
             set { treeViewItem = value;}
         }
 
-        public TechFileTreeViewItem Parent
+        public NodeTree Parent
         {
-            get { return parentTreeViewItem; }
-            set { parentTreeViewItem = value;}
+            get { return parentNode; }
+            set { parentNode = value;}
         }
 
         public String Name

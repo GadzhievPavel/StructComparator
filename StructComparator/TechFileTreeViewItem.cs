@@ -34,7 +34,7 @@ namespace StructComparator
             BitmapImage bitmapImage = new BitmapImage();
 
             bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(@"\res\add.png", UriKind.RelativeOrAbsolute);
+            bitmapImage.UriSource = new Uri(@"\res\noActionDocument.png", UriKind.RelativeOrAbsolute);
             bitmapImage.EndInit();
             imageIcon.Source = bitmapImage;
             stack.Children.Add(imageIcon);
@@ -69,6 +69,31 @@ namespace StructComparator
             set { stage.Text = value; }
         }
 
+        public void setAdded()
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@"\res\add.png", UriKind.RelativeOrAbsolute);
+            bitmapImage.EndInit();
+            imageIcon.Source = bitmapImage;
+        }
 
+        public void setDelete()
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@"\res\delete.png", UriKind.RelativeOrAbsolute);
+            bitmapImage.EndInit();
+            imageIcon.Source = bitmapImage;
+        }
+
+        public void setNoAction()
+        {
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(@"\res\noActionDocument.png", UriKind.RelativeOrAbsolute);
+            bitmapImage.EndInit();
+            imageIcon.Source = bitmapImage;
+        }
     }
 }

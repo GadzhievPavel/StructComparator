@@ -114,9 +114,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="res\delete.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="res\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\noActionDocument.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
